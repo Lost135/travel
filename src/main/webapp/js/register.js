@@ -56,7 +56,7 @@ function checkName(){
     var reg2_name = /^\s+$/;
 
     var flag = true
-    if(name == null || reg2_name.test(name) || reg_name.test(name)){
+    if(name == "" || reg2_name.test(name) || reg_name.test(name)){
         $("#name").css("border","1px solid red");
         flag = false;
     }else {
@@ -65,9 +65,48 @@ function checkName(){
     return flag;
 }
 
+function checkTelephone(){
+    var telephone = $("#telephone").val();
+    var reg_teleptone = /^\d{11}$/;
+
+    var  flag = reg_teleptone.test(telephone);
+    if(flag){
+        $("#telephone").css("border","");
+    }else {
+        $("#telephone").css("border","1px solid red");
+    }
+    return flag;
+}
+
+function checkBirthday(){
+    var birthday = $("#birthday").val();
+
+    var  flag = true;
+    if(birthday == ""){
+        $("#birthday").css("border","1px solid red");
+        flag = false;
+    }else {
+        $("#birthday").css("border","");
+    }
+    return flag;
+}
+
+function checkCheck(){
+    var check = $("#check").val();
+
+    var  flag = true;
+    if(check == ""){
+        $("#check").css("border","1px solid red");
+        flag = false;
+    }else {
+        $("#check").css("border","");
+    }
+    return flag;
+}
+
 $(function () {
    $("#registerForm").submit(function (){
-       if (checkUsername() && checkPassword() && checkEmail() && checkName()){
+       if (checkUsername() && checkPassword() && checkEmail() && checkName() && checkTelephone() && checkBirthday() && checkCheck()){
            $.post("registUserServlet", $(this).serialize(), function (data){
                if(data.flag){
                    location.href="register_ok.html";
@@ -82,5 +121,8 @@ $(function () {
     $("#password").blur(checkPassword);
     $("#email").blur(checkEmail);
     $("#name").blur(checkName);
+    $("#telephone").blur(checkTelephone);
+    $("#birthday").blur(checkBirthday);
+    $("#check").blur(checkCheck);
 });
 
