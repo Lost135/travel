@@ -146,6 +146,7 @@
                     <!-- 项目访问路径  本例：localhost:9090,  如果配置的aa， 则访问路径为localhost:9090/aa-->
                     <path>/travel</path>
                 </configuration>
+
             </plugin>
 
         </plugins>
