@@ -107,7 +107,7 @@ function checkCheck(){
 $(function () {
    $("#registerForm").submit(function (){
        if (checkUsername() && checkPassword() && checkEmail() && checkName() && checkTelephone() && checkBirthday() && checkCheck()){
-           $.post("registUserServlet", $(this).serialize(), function (data){
+           $.post("user/regist", $(this).serialize(), function (data){
                if(data.flag){
                    location.href="register_ok.html";
                }else {
