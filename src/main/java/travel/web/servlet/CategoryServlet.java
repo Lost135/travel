@@ -27,7 +27,5 @@ public class CategoryServlet extends BaseServlet {
         List<Category> cs = service.findAll();
         //2.序列化json返回
         writeValue(cs,response);
-
-
     }
 }
