@@ -1,5 +1,6 @@
 travel\dao\CategoryDao.class
 travel\dao\RouteImgDao.class
+travel\dao\FavoriteDao.class
 travel\domain\Favorite.class
 travel\dao\impl\UserDaoImpl.class
 travel\domain\ResultInfo.class
@@ -16,6 +17,8 @@ travel\service\CategoryService.class
 travel\web\servlet\RouteServlet.class
 travel\dao\UserDao.class
 travel\domain\Category.class
+travel\service\FavoriteService.class
+travel\service\impl\FavoriteServiceImpl.class
 travel\util\JedisUtil.class
 travel\domain\PageBean.class
 travel\util\JDBCUtils.class
@@ -30,6 +33,7 @@ travel\service\impl\RouteServiceImpl.class
 travel\util\Md5Util.class
 travel\dao\impl\CategoryDaoImpl.class
 travel\service\impl\CategoryServiceImpl.class
+travel\dao\impl\FavoriteDaoImpl.class
 travel\dao\SellerDao.class
 travel\domain\RouteImg.class
 travel\web\servlet\CheckCodeServlet.class

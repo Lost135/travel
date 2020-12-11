@@ -2,6 +2,10 @@ package travel.web.servlet;
 
 import travel.domain.PageBean;
 import travel.domain.Route;
+import travel.domain.User;
+import travel.service.FavoriteService;
+import travel.service.RouteService;
+import travel.service.impl.FavoriteServiceImpl;
 import travel.service.impl.RouteServiceImpl;
 
 import javax.servlet.ServletException;
@@ -13,7 +17,8 @@ import java.io.IOException;
 @WebServlet("/route/*")
 public class RouteServlet extends BaseServlet{
 
-    public RouteServiceImpl routeService = new RouteServiceImpl();
+    public RouteService routeService = new RouteServiceImpl();
+    public FavoriteService favoriteService = new FavoriteServiceImpl();
 
     /**
      * 分页查询
@@ -73,6 +78,49 @@ public class RouteServlet extends BaseServlet{
         Route route = routeService.findOne(rid);
         //3.转为json写回客户端
         writeValue(route,response);
+    }
+
+    /**
+     * 判断当前登录用户是否收藏过该线路
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void isFavorite(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //1. 获取线路id
+        String rid = request.getParameter("rid");
+        //2. 获取当前登录的用户 user
+        User user = (User)request.getSession().getAttribute("user");
+        int uid;
+        if(user == null){
+            uid = 0;
+
+        }else {
+            uid = user.getUid();
+        }
+        //3. 调用FavoriteService查询是否收藏
+        boolean flag = favoriteService.isFavorite(rid,uid);
+
+        writeValue(flag,response);
+    }
+    /**
+     * 添加收藏
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void addFavorite(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String rid = request.getParameter("rid");
+        User user = (User)request.getSession().getAttribute("user");
+        int uid;
+        if(user == null){
+            return;
+        }else {
+            uid = user.getUid();
+        }
+        favoriteService.add(rid,uid);
     }
 
 }
