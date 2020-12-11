@@ -1,13 +1,22 @@
 $(function (){
-    var search = location.search;
-    var cid = search.split("=")[1];
+    //var search = location.search;
+    //var cid = search.split("cid=")[1];
     //当页码加载完成后，调用load方法，发送ajax请求加载数据
-    load(cid);
+    var cid = getParameter("cid");
+    var rname = getParameter("rname");
+    //判断rname如果不为null或者""
+    if(rname){
+        //url解码
+        rname = window.decodeURIComponent(rname);
+    }else {
+        rname = "";
+    }
+    load(cid,null,rname);
 });
 
-function load(cid,currentPage){
+function load(cid,currentPage,rname){
     //发送ajax请求，请求route/pageQuery,传递cid
-    $.get("route/pageQuery",{cid:cid,currentPage:currentPage},function (pb){
+    $.get("route/pageQuery",{cid:cid,currentPage:currentPage,rname:rname},function (pb){
         //解析pagebean数据，展示到页面上
         //1.分页工具条数据展示
         $("#totalPage").html(pb.totalPage);
@@ -15,7 +24,7 @@ function load(cid,currentPage){
 
         var lis = "";
         //转跳首页
-        var firstPage = '<li onclick="javascipt:load('+cid+')"><a href="javascript:void(0)">首页</a></li>';
+        var firstPage = '<li onclick="javascipt:load('+cid+',1,\''+rname+'\')"><a href="javascript:void(0)">首页</a></li>';
 
         //计算上一页的页码
         var beforeNum = pb.currentPage - 1;
@@ -23,7 +32,7 @@ function load(cid,currentPage){
             beforeNum = 1;
         }
 
-        var beforePage = '<li  onclick="javascipt:load('+cid+','+beforeNum+')" class="threeword"><a href="javascript:void(0)">上一页</a></li>';
+        var beforePage = '<li  onclick="javascipt:load('+cid+','+beforeNum+',\''+rname+'\')" class="threeword"><a href="javascript:void(0)">上一页</a></li>';
 
         lis +=firstPage;
         lis +=beforePage;
@@ -60,22 +69,22 @@ function load(cid,currentPage){
             var li;
             if(pb.currentPage == i){
                 //当前页码加样式
-                li = '<li class="curPage" onclick="javascipt:load('+cid+','+i+')"><a href="javascript:void(0)">'+i+'</a></li>';
+                li = '<li class="curPage" onclick="javascipt:load('+cid+','+i+',\''+rname+'\')"><a href="javascript:void(0)">'+i+'</a></li>';
             }else {
                 //创建页码的li
-                li = '<li onclick="javascipt:load('+cid+','+i+')"><a href="javascript:void(0)">'+i+'</a></li>';
+                li = '<li onclick="javascipt:load('+cid+','+i+',\''+rname+'\')"><a href="javascript:void(0)">'+i+'</a></li>';
             }
             lis += li;
         }
 
         //末页
-        var lastPage = '<li class="threeword" onclick="javascipt:load('+cid+',' + pb.totalPage +')"><a href="javascript:void(0)">末页</a></li>';
+        var lastPage = '<li class="threeword" onclick="javascipt:load('+cid+',' + pb.totalPage +',\''+rname+'\')"><a href="javascript:void(0)">末页</a></li>';
         //计算下一页的页码
         var nextNum = pb.currentPage + 1;
         if(nextNum >= end){
             nextNum = end;
         }
-        var nextPage = '<li  onclick="javascipt:load('+cid+','+nextNum+')" class="threeword"><a href="javascript:void(0)">下一页</a></li>';
+        var nextPage = '<li  onclick="javascipt:load('+cid+','+nextNum+',\''+rname+'\')" class="threeword"><a href="javascript:void(0)">下一页</a></li>';
 
         lis += nextPage;
         lis +=lastPage;
@@ -100,7 +109,7 @@ function load(cid,currentPage){
                 '<span>'+route.price+'</span>\n' +
                 '<span>起</span>\n' +
                 '</p>\n' +
-                '<p><a href="route_detail.html">查看详情</a></p>\n' +
+                '<p><a href="route_detail.html?rid='+route.rid+'">查看详情</a></p>\n' +
                 '</div>\n' +
                 '</li>';
             route_lis +=li;

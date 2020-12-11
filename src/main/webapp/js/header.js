@@ -3,7 +3,6 @@ $(function (){
     $.get("user/findOne",{},function (data) {
         var msg = "欢迎回来，"+data.name;
         $("#span_username").html(msg);
-
     });
 
     //查询分类数据
@@ -17,5 +16,12 @@ $(function (){
         //拼接收藏排行榜的li,<li><a href="favoriterank.html">收藏排行榜</a></li>
         lis+= '<li><a href="favoriterank.html">收藏排行榜</a></li>';
         $("#category").html(lis);
+    });
+
+    //搜索框参数
+    $("#search-button").click(function (){
+        var rname = $("#search_input").val();
+        var cid = getParameter("cid");
+        location.href="http://localhost:8080/travel/route_list.html?cid="+cid+"&rname="+rname;
     });
 });
