@@ -123,4 +123,48 @@ public class RouteServlet extends BaseServlet{
         favoriteService.add(rid,uid);
     }
 
+    public void delFavorite(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String rid = request.getParameter("rid");
+        User user = (User)request.getSession().getAttribute("user");
+        int uid;
+        if(user == null){
+            return;
+        }else {
+            uid = user.getUid();
+        }
+        favoriteService.del(rid,uid);
+    }
+
+    public void favoriteQuery(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String currentPageStr = request.getParameter("currentPage");
+        String pageSizeStr = request.getParameter("pageSize");
+        User user = (User)request.getSession().getAttribute("user");
+        int uid;
+        if(user == null){
+            return;
+        }else {
+            uid = user.getUid();
+        }
+
+        int currentPage = 0;//当前页码，如果不传递，则默认为第一页
+        if(currentPageStr != null && currentPageStr.length() > 0){
+            currentPage = Integer.parseInt(currentPageStr);
+        }else{
+            currentPage = 1;
+        }
+
+        int pageSize = 0;//每页显示条数，如果不传递，默认每页显示5条记录
+        if(pageSizeStr != null && pageSizeStr.length() > 0){
+            pageSize = Integer.parseInt(pageSizeStr);
+        }else{
+            pageSize = 5;
+        }
+
+        //3. 调用service查询PageBean对象
+        PageBean<Route> pb = routeService.favoriteQuery(currentPage, pageSize, uid);
+
+        //4. 将pageBean对象序列化为json，返回
+        writeValue(pb,response);
+    }
+
 }

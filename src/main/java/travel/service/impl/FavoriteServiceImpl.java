@@ -16,4 +16,9 @@ public class FavoriteServiceImpl implements FavoriteService {
     public void add(String rid,int uid){
         favoriteDao.add(Integer.parseInt(rid),uid);
     }
+
+    @Override
+    public void del(String rid, int uid) {
+        favoriteDao.del(Integer.parseInt(rid),uid);
+    }
 }

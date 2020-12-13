@@ -8,4 +8,6 @@ public interface FavoriteDao {
     int findCountByRid(int rid);
 
     void add(int rid, int uid);
+
+    public void del(int rid, int uid);
 }

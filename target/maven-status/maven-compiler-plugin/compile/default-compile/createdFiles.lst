@@ -1,6 +1,7 @@
 travel\dao\CategoryDao.class
 travel\dao\RouteImgDao.class
 travel\dao\FavoriteDao.class
+travel\dao\FindFavorDao.class
 travel\domain\Favorite.class
 travel\dao\impl\UserDaoImpl.class
 travel\domain\ResultInfo.class
@@ -24,6 +25,7 @@ travel\domain\PageBean.class
 travel\util\JDBCUtils.class
 travel\util\MailUtils.class
 travel\web\servlet\UserServlet.class
+travel\web\filter\LoginFilter.class
 travel\web\servlet\BaseServlet.class
 travel\dao\impl\RouteImgDaoImpl.class
 travel\util\UuidUtil.class
@@ -32,6 +34,7 @@ travel\dao\impl\RouteDaoImpl.class
 travel\service\impl\RouteServiceImpl.class
 travel\util\Md5Util.class
 travel\dao\impl\CategoryDaoImpl.class
+travel\dao\impl\FindFavorDaoImpl.class
 travel\service\impl\CategoryServiceImpl.class
 travel\dao\impl\FavoriteDaoImpl.class
 travel\dao\SellerDao.class

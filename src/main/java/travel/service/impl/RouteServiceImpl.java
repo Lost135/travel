@@ -1,13 +1,7 @@
 package travel.service.impl;
 
-import travel.dao.FavoriteDao;
-import travel.dao.RouteDao;
-import travel.dao.RouteImgDao;
-import travel.dao.SellerDao;
-import travel.dao.impl.FavoriteDaoImpl;
-import travel.dao.impl.RouteDaoImpl;
-import travel.dao.impl.RouteImgDaoImpl;
-import travel.dao.impl.SellerDaoImpl;
+import travel.dao.*;
+import travel.dao.impl.*;
 import travel.domain.PageBean;
 import travel.domain.Route;
 import travel.domain.RouteImg;
@@ -21,6 +15,7 @@ public class RouteServiceImpl implements RouteService {
     private RouteImgDao routeImgDao = new RouteImgDaoImpl();
     private SellerDao sellerDao = new SellerDaoImpl();
     private FavoriteDao favoriteDao = new FavoriteDaoImpl();
+    private FindFavorDao findFavorDao = new FindFavorDaoImpl();
 
     @Override
     public PageBean<Route> pageQuery(int cid, int currentPage, int pageSize, String rname) {
@@ -55,5 +50,24 @@ public class RouteServiceImpl implements RouteService {
         //4. 查询收藏次数
         int count = favoriteDao.findCountByRid(route.getRid());
         return route;
+    }
+
+    @Override
+    public PageBean<Route> favoriteQuery(int currentPage, int pageSize,int uid) {
+        PageBean<Route> pb = new PageBean<Route>();
+        pb.setCurrentPage(currentPage);
+        pb.setPageSize(pageSize);
+
+        int totalCount = findFavorDao.findTotalCount(uid);
+        pb.setTotalCount(totalCount);
+
+        int start = (currentPage - 1) * pageSize;
+        List<Route> list = findFavorDao.findByPage(start,pageSize,uid);
+        pb.setList(list);
+
+        int totalPage = totalCount % pageSize == 0 ? totalCount / pageSize :(totalCount / pageSize) + 1 ;
+        pb.setTotalPage(totalPage);
+
+        return pb;
     }
 }
