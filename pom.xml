@@ -128,6 +128,12 @@
             <version>2.7.0</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-shade-plugin</artifactId>
+            <version>3.2.4</version>
+        </dependency>
+
     </dependencies>
 
 
@@ -143,12 +149,11 @@
                 <configuration>
                     <!-- 通过maven tomcat7:run运行项目时，访问项目的端口号 -->
                     <port>8080</port>
-                    <!-- 项目访问路径  本例：localhost:9090,  如果配置的aa， 则访问路径为localhost:9090/aa-->
+                    <!-- 项目访问路径/aa-->
                     <path>/travel</path>
                 </configuration>
 
             </plugin>
-
         </plugins>
     </build>
 </project>
